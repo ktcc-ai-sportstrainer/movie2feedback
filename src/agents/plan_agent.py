@@ -1,9 +1,9 @@
 from typing import Dict
 from src.utils.openai_client import OpenAIClient
-from src.data.user_data import UserData
+from src.persona.user_data import UserData
 from src.utils.logger import logger
 
-class TrainingPlanAgent:
+class PlanAgent:
     def __init__(self, openai_client: OpenAIClient, prompt_template: Dict[str, str]):
         self.openai_client = openai_client
         self.prompt_template = prompt_template

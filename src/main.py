@@ -28,35 +28,35 @@ def main():
     logger.info("Starting AI Sports Trainer")
 
     # Load prompts
-    conversation_prompt = load_prompt(Config.CONVERSATION_PROMPT_PATH)
-    training_plan_prompt = load_prompt(Config.TRAINING_PLAN_PROMPT_PATH)
-    motivational_prompt = load_prompt(Config.MOTIVATIONAL_PROMPT_PATH)
+    interact_prompt = load_prompt(Config.INTERACT_PROMPT_PATH)
+    plan_prompt = load_prompt(Config.PLAN_PROMPT_PATH)
+    support_prompt = load_prompt(Config.SUPPORT_PROMPT_PATH)
 
     # Create LLM client
     llm_client = get_llm_client()
 
     # Create agents
-    conversation_agent = ConversationAgent(llm_client, conversation_prompt)
-    training_plan_agent = TrainingPlanAgent(llm_client, training_plan_prompt)
-    motivational_agent = MotivationalAgent(llm_client, motivational_prompt)
+    interact_agent = InteractAgent(llm_client, interact_prompt)
+    plan_agent = PlanAgent(llm_client, plan_prompt)
+    support_agent = SupportAgent(llm_client, support_prompt)
 
     # Initial user data (this could be loaded from a file or database)
     user_data = UserData(name="", age=0, position="", experience=0, strengths=[], weaknesses=[])
 
-    # Conversation phase
-    user_data = conversation_agent.interact(user_data)
+    # Interaction phase
+    user_data = interact_agent.interact(user_data)
 
     # Training plan generation
-    training_plan = training_plan_agent.generate_plan(user_data)
+    training_plan = plan_agent.generate_plan(user_data)
 
-    # Motivational message generation
-    motivation = motivational_agent.generate_motivation(user_data, training_plan)
+    # Support message generation
+    support_message = support_agent.generate_support(user_data, training_plan)
 
     # Output results
     print("Training Plan:")
     print(training_plan)
-    print("\nMotivational Message:")
-    print(motivation)
+    print("\nSupport Message:")
+    print(support_message)
 
     logger.info("AI Sports Trainer session completed")
 

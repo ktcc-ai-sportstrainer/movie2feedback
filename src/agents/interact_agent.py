@@ -1,22 +1,22 @@
 from typing import Dict
-from src.utils.openai_client import OpenAIClient
-from src.data.user_data import UserData
+from src.utils.llm_client import LLMClient
+from src.persona.user_data import UserData
 from src.utils.logger import logger
 
-class ConversationAgent:
-    def __init__(self, openai_client: OpenAIClient, prompt_template: Dict[str, str]):
-        self.openai_client = openai_client
+class InteractAgent:
+    def __init__(self, llm_client: LLMClient, prompt_template: Dict[str, str]):
+        self.llm_client = llm_client
         self.prompt_template = prompt_template
 
     def interact(self, user_data: UserData) -> UserData:
-        logger.info("Starting conversation with user")
+        logger.info("Starting interaction with user")
         system_prompt = self.get_system_prompt()
         user_prompt = self.get_user_prompt(user_data)
         
-        conversation = self.openai_client.generate_text(system_prompt, user_prompt)
+        conversation = self.llm_client.generate_text(system_prompt, user_prompt)
         updated_user_data = self.extract_user_data(conversation, user_data)
         
-        logger.info("Finished conversation with user")
+        logger.info("Finished interaction with user")
         return updated_user_data
 
     def get_system_prompt(self) -> str:
