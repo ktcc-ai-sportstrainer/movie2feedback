@@ -40,8 +40,8 @@ def main():
     plan_agent = PlanAgent(llm_client, plan_prompt)
     support_agent = SupportAgent(llm_client, support_prompt)
 
-    # Initial user data (this could be loaded from a file or database)
-    user_data = UserData(name="", age=0, position="", experience=0, strengths=[], weaknesses=[])
+    # Load user data from config
+    user_data = UserData(**Config.get_user_data())
 
     # Interaction phase
     user_data = interact_agent.interact(user_data)
@@ -53,7 +53,9 @@ def main():
     support_message = support_agent.generate_support(user_data, training_plan)
 
     # Output results
-    print("Training Plan:")
+    print("User Data:")
+    print(user_data)
+    print("\nTraining Plan:")
     print(training_plan)
     print("\nSupport Message:")
     print(support_message)
